@@ -51,11 +51,17 @@
                 docType: "",
                 docName: "",
             });
-
+            const uid = function () {
+                return (
+                    Date.now().toString(36) +
+                    Math.random().toString(36).slice(2)
+                );
+            };
             async function submitForm() {
                 console.log(contractForm);
                 const { docName, docType } = contractForm;
                 const requiredData = {
+                    id: uid(),
                     name: docName,
                     doc_type: docType,
                 };

@@ -1,7 +1,7 @@
 import axiosInstance from "../http";
 export async function fetchContracts() {
     try {
-        let url = "/special/db";
+        let url = "/special/contracts";
         let res = await axiosInstance.get(url);
         return res.data;
     } catch (error) {
@@ -13,7 +13,7 @@ export async function newContract(formData) {
         console.log(formData);
         await axiosInstance({
             method: "post",
-            url: "/special/db",
+            url: "/special/contracts",
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
             },

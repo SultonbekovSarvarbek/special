@@ -1,6 +1,7 @@
 {
     "contracts":[
-        {
+        {   
+            "id":1,
             "name":"Договор №001",
             "status":"approved",
             "doc_type":"contract",
@@ -8,6 +9,7 @@
             "end_date":"04.07.2022"
         },
         {
+            "id":2,
             "name":"Договор №001",
             "status":"rejected",
             "doc_type":"reference",
@@ -15,6 +17,7 @@
             "end_date":"04.07.2022"
         },
         {
+            "id":3,
             "name":"Справка",
             "status":"none",
             "doc_type":"another",
@@ -22,6 +25,7 @@
             "end_date":"04.07.2022"
         },
         {
+            "id":4,
             "name":"Анкета",
             "status":"another",
             "doc_type":"Другое",

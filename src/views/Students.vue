@@ -1,8 +1,7 @@
 <template>
     <div class="students">
-        <!--{{ posts }}-->
         <student-card :student-details="studentInfo" />
-        <contract class="contract" :contracts="posts" />
+        <contract class="contract" :contracts="contracts" />
     </div>
 </template>
 
@@ -10,8 +9,7 @@
     import { reactive, ref } from "vue";
     import StudentCard from "../components/student/StudentCard.vue";
     import Contract from "../components/student/contract/Contract.vue";
-    //import { fetchUsers } from "../api/users";
-    import { fetchPosts } from "../api/posts";
+    import { fetchContracts } from "../api/contracts";
     export default {
         name: "Students",
         components: { StudentCard, Contract },
@@ -25,15 +23,13 @@
                 date_of_birth: "25.04.2004 (17 лет)",
                 address: "г. Краснодар, ул. Советская 24, кв. 208 ",
             });
-            const posts = ref([]);
 
-            //*** fetch posts */
-            //*** asume that posts are contracts */
+            const contracts = ref([]);
             (async () => {
-                posts.value = await fetchPosts();
+                contracts.value = await fetchContracts();
             })();
 
-            return { studentInfo, posts };
+            return { studentInfo, contracts };
         },
     };
 </script>

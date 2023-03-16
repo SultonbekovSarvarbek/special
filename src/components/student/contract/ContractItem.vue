@@ -3,8 +3,17 @@
         <div class="contract-item__info">
             <div>
                 <h2 class="contract-item__name">{{ contract.name }}</h2>
-                <span class="contract-item__status"><vc-status :type="contract.type"/></span>
-                <span class="contract-item__date">{{ contract.date }}</span>
+                <span class="contract-item__status"
+                    ><vc-status
+                        v-if="contract.status !== 'none'"
+                        :type="contract.status"
+                /></span>
+                <span class="contract-item__date"
+                    >{{ contract.start_date }}
+                    <template v-if="contract.end_date">
+                        - {{ contract.end_date }}
+                    </template>
+                </span>
             </div>
             <div class="contract-item__actions">
                 <base-icon name="ic_print" />
@@ -23,8 +32,8 @@
     import VcStatus from "../../ui/VcStatus.vue";
     export default {
         name: "ContractItem",
-        components:{
-            VcStatus
+        components: {
+            VcStatus,
         },
         props: {
             contract: {
@@ -60,7 +69,7 @@
         &__date {
             color: $secondary;
         }
-        &__status{
+        &__status {
             display: block;
         }
         &__actions {

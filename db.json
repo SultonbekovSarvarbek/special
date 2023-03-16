@@ -3,27 +3,27 @@
         {
             "name":"Договор №001",
             "status":"approved",
-            "doc_type":"Договор",
+            "doc_type":"contract",
             "start_date":"04.07.2021",
             "end_date":"04.07.2022"
         },
         {
             "name":"Договор №001",
-            "status":"approved",
-            "doc_type":"Справка",
+            "status":"rejected",
+            "doc_type":"reference",
             "start_date":"04.07.2021",
             "end_date":"04.07.2022"
         },
         {
             "name":"Справка",
             "status":"none",
-            "doc_type":"Другое",
+            "doc_type":"another",
             "start_date":"04.07.2021",
             "end_date":"04.07.2022"
         },
         {
             "name":"Анкета",
-            "status":"none",
+            "status":"another",
             "doc_type":"Другое",
             "start_date":"04.07.2021"
         }

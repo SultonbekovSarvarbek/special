@@ -71,6 +71,7 @@
         }
         &__status {
             display: block;
+            height: 21.6px;
         }
         &__actions {
             display: flex;

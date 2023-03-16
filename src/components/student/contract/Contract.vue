@@ -25,8 +25,13 @@
                 >добавить документ</base-button
             >
         </div>
-        {{ contracts }}
-        <contract-list class="contract-list" :all-contracts="contracts" />
+        <div class="contract-list">
+            <h1 v-if="contracts && contracts.length === 0">Загрузка</h1>
+            <contract-list
+                v-if="contracts && contracts.length > 0"
+                :all-contracts="contracts"
+            />
+        </div>
     </div>
 </template>
 

@@ -3,7 +3,7 @@
         <student-card :student-details="studentInfo" />
         <contract class="contract" :contracts="contracts" />
 
-        <form @submit.prevent="submitForm">
+        <!--<form @submit.prevent="submitForm">
             <div>
                 <label for="doc_type">Название документа *</label>
                 <input
@@ -23,7 +23,7 @@
             <div>
                 <button type="submit">Добавить документ</button>
             </div>
-        </form>
+        </form>-->
     </div>
 </template>
 
@@ -32,7 +32,6 @@
     import StudentCard from "../components/student/StudentCard.vue";
     import Contract from "../components/student/contract/Contract.vue";
     import { fetchContracts, newContract } from "../api/contracts";
-
     export default {
         name: "Students",
         components: { StudentCard, Contract },
@@ -51,24 +50,18 @@
                 docType: "",
                 docName: "",
             });
-            const uid = function () {
-                return (
-                    Date.now().toString(36) +
-                    Math.random().toString(36).slice(2)
-                );
-            };
+            const contracts = ref([]);
+
             async function submitForm() {
-                console.log(contractForm);
                 const { docName, docType } = contractForm;
                 const requiredData = {
-                    id: uid(),
+                    id: Date.now(),
                     name: docName,
                     doc_type: docType,
                 };
                 await newContract(requiredData);
             }
 
-            const contracts = ref([]);
             (async () => {
                 contracts.value = await fetchContracts();
             })();

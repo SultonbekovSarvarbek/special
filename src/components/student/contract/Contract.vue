@@ -4,16 +4,13 @@
             <div class="search-bar__items">
                 <div class="search-bar__item">
                     <label class="search-bar__label">Тип документа</label>
-                    <vc-select
-                        v-model="docType"
-                        :options="['Договор', 'Справка', 'Другое']"
-                    />
+                    <vc-select v-model="docType" :options="docTypeOptions" />
                 </div>
                 <div class="search-bar__item">
                     <label class="search-bar__label">Статус</label>
                     <vc-select
                         v-model="docStatus"
-                        :options="['Заключен', 'Расторгнут']"
+                        :options="docStatusOptions"
                     />
                 </div>
                 <div class="search-bar__item">
@@ -26,17 +23,18 @@
             >
         </div>
         <div class="contract-list">
-            <h1 v-if="contracts && contracts.length === 0">Загрузка</h1>
+            <!--{{ allContracts2 }}-->
+            <h1 v-if="allContracts2 && allContracts2.length === 0">Загрузка</h1>
             <contract-list
-                v-if="contracts && contracts.length > 0"
-                :all-contracts="contracts"
+                v-if="allContracts2 && allContracts2.length > 0"
+                :all-contracts="allContracts2"
             />
         </div>
     </div>
 </template>
 
 <script>
-    import { ref } from "vue";
+    import { ref, reactive, computed } from "vue";
     import VcSelect from "../../ui/VcSelect.vue";
     import ContractList from "./ContractList.vue";
     export default {
@@ -48,25 +46,74 @@
             },
         },
         setup(props, ctx) {
-            let docType = ref("");
-            let docStatus = ref("");
-            let docDate = ref("");
-            const allContracts = ref([
+            const docType = ref("");
+            const docStatus = ref("");
+            const docDate = ref("");
+            const allContracts = reactive([]);
+            const docTypeOptions = reactive([
                 {
-                    name: "Договор №001",
-                    type: "approved",
-                    date: "04.07.2021 - 04.07.2022",
+                    value: "contract",
+                    name: "Договор",
                 },
                 {
-                    name: "Договор №002",
-                    type: "rejected",
-                    date: "04.07.2021 - 04.07.2022",
+                    value: "references",
+                    name: "Справка",
+                },
+                {
+                    value: "another",
+                    name: "Другое",
                 },
             ]);
+            const docStatusOptions = reactive([
+                {
+                    value: "approved",
+                    name: "Заключен",
+                },
+                {
+                    value: "rejected",
+                    name: "Расторгнут",
+                },
+            ]);
+
             function addContract() {
                 console.log("add contract");
             }
-            return { docType, docStatus, docDate, addContract, allContracts };
+
+            const allContracts2 = computed(() => {
+                console.log(docStatus);
+                //if (docStatus.value && docStatus.value.value === "approved") {
+                //    return props.contracts.filter(
+                //        (elem) => elem.status === "approved"
+                //    );
+                //} else if (
+                //    docStatus.value &&
+                //    docStatus.value.value === "rejected"
+                //) {
+                //    return props.contracts.filter(
+                //        (elem) => elem.status === "rejected"
+                //    );
+                //} else {
+                //    return props.contracts.filter((elem) => elem);
+                //}
+                if (docStatus || docType) {
+                    return props.contracts.filter(
+                        (elem) => elem.status === "rejected"
+                    );
+                } else {
+                    return props.contracts.filter((elem) => elem);
+                }
+            });
+
+            return {
+                docType,
+                docStatus,
+                docDate,
+                addContract,
+                docTypeOptions,
+                docStatusOptions,
+                allContracts,
+                allContracts2,
+            };
         },
     };
 </script>

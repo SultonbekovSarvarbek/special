@@ -52,10 +52,11 @@
         padding: 20px;
         display: flex;
         background-color: #fff;
-        max-width: 378px;
+        min-width: 378px;
         gap: 15px;
         box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
+        justify-content: space-between;
         &__info {
             display: flex;
             flex-direction: column;

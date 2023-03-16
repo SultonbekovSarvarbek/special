@@ -2,6 +2,7 @@
     <v-select
         :options="options"
         :modelValue="selected"
+        label="name"
         :searchable="false"
         :placeholder="placeholder"
         @update:modelValue="updateModelValue"
@@ -36,7 +37,6 @@
         setup(props, ctx) {
             let selected = ref[""];
             function updateModelValue(val) {
-                console.log(val);
                 ctx.emit("update:modelValue", val);
             }
             return { selected, updateModelValue };

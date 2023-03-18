@@ -13,16 +13,19 @@
                 </router-view>
             </div>
         </div>
+        <modals-container></modals-container>
     </div>
 </template>
 
 <script>
     import AppSidebar from "./components/ui/app/AppSidebar.vue";
     import AppHeader from "./components/ui/app/AppHeader.vue";
+    import { ModalsContainer } from "vue-final-modal";
     export default {
         components: {
             AppSidebar,
             AppHeader,
+            ModalsContainer,
         },
         setup() {
             // ...

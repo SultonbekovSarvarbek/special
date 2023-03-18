@@ -18,16 +18,14 @@
                     <vc-select v-model="docDate" :options="['Дате']" />
                 </div>
             </div>
-            <base-button type="warning" @click="addContract"
+            <base-button type="warning" uppercase @click="modalInstance.open()"
                 >добавить документ</base-button
             >
         </div>
         <div class="contract-list">
-            <!--{{ allContracts2 }}-->
-            <h1 v-if="allContracts2 && allContracts2.length === 0">Загрузка</h1>
             <contract-list
-                v-if="allContracts2 && allContracts2.length > 0"
-                :all-contracts="allContracts2"
+                v-if="allContracts && allContracts.length > 0"
+                :all-contracts="allContracts"
             />
         </div>
     </div>
@@ -35,8 +33,14 @@
 
 <script>
     import { ref, reactive, computed } from "vue";
-    import VcSelect from "../../ui/VcSelect.vue";
+    import VcSelect from "@/components/ui/VcSelect.vue";
     import ContractList from "./ContractList.vue";
+    import { multiFilter } from "@/utils/index";
+    import { useModal } from "vue-final-modal";
+    import { vfm } from "@/plugins/vue-final-modal";
+    import VModal from "@/components/modals/VModal.vue";
+    import NewContract from "@/components/modals/NewContract.vue";
+
     export default {
         name: "Contract",
         components: { VcSelect, ContractList },
@@ -46,17 +50,16 @@
             },
         },
         setup(props, ctx) {
-            const docType = ref("");
-            const docStatus = ref("");
-            const docDate = ref("");
-            const allContracts = reactive([]);
+            const docType = ref(null);
+            const docStatus = ref(null);
+            const docDate = ref(null);
             const docTypeOptions = reactive([
                 {
                     value: "contract",
                     name: "Договор",
                 },
                 {
-                    value: "references",
+                    value: "reference",
                     name: "Справка",
                 },
                 {
@@ -75,33 +78,32 @@
                 },
             ]);
 
+            const modalInstance = useModal({
+                context: vfm,
+                component: VModal,
+                onClosed() {
+                    modalInstance.destroy();
+                },
+                slots: {
+                    default: NewContract,
+                },
+            });
+
             function addContract() {
-                console.log("add contract");
+                console.log(open);
+                modalInstance.open();
+                //open();
             }
 
-            const allContracts2 = computed(() => {
-                console.log(docStatus);
-                //if (docStatus.value && docStatus.value.value === "approved") {
-                //    return props.contracts.filter(
-                //        (elem) => elem.status === "approved"
-                //    );
-                //} else if (
-                //    docStatus.value &&
-                //    docStatus.value.value === "rejected"
-                //) {
-                //    return props.contracts.filter(
-                //        (elem) => elem.status === "rejected"
-                //    );
-                //} else {
-                //    return props.contracts.filter((elem) => elem);
-                //}
-                if (docStatus || docType) {
-                    return props.contracts.filter(
-                        (elem) => elem.status === "rejected"
-                    );
-                } else {
-                    return props.contracts.filter((elem) => elem);
-                }
+            const allContracts = computed(() => {
+                const filters = {};
+                docType.value && docType.value !== null
+                    ? (filters.doc_type = docType.value.value)
+                    : {};
+                docStatus.value && docStatus.value !== null
+                    ? (filters.status = docStatus.value.value)
+                    : {};
+                return multiFilter(props.contracts, filters);
             });
 
             return {
@@ -111,8 +113,8 @@
                 addContract,
                 docTypeOptions,
                 docStatusOptions,
+                modalInstance,
                 allContracts,
-                allContracts2,
             };
         },
     };

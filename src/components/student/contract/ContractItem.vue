@@ -29,7 +29,7 @@
 
 <script>
     import { toRefs } from "vue";
-    import VcStatus from "../../ui/VcStatus.vue";
+    import VcStatus from "@/components/ui/VcStatus.vue";
     export default {
         name: "ContractItem",
         components: {

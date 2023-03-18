@@ -14,4 +14,9 @@ export default defineConfig({
         },
     },
     plugins: [vue(), svgLoader()],
+    resolve: {
+        alias: {
+            "@": path.resolve(__dirname, "./src"),
+        },
+    },
 });

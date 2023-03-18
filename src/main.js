@@ -1,12 +1,18 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import VSelect from "vue-select";
+
+// plugins
+import VSelect from "@/plugins/vue-select";
+import { vfm } from "@/plugins/vue-final-modal";
+
+// glabal imported components
 import GlobalComponents from "./plugins/globals";
-import "./assets/scss/main.scss"; // global css
+
+import "@/assets/scss/main.scss"; // global css
 const app = createApp(App)
     .use(router)
     .component("v-select", VSelect)
-    .use(GlobalComponents);
-
+    .use(GlobalComponents)
+    .use(vfm);
 app.mount("#app");

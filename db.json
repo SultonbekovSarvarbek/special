@@ -5,32 +5,32 @@
             "name":"Договор №001",
             "status":"approved",
             "doc_type":"contract",
-            "start_date":"04.07.2021",
-            "end_date":"04.07.2022"
+            "start_date":"04.07.2023",
+            "end_date":"04.07.2034"
         },
         {   
             "id":2,
             "name":"Договор №002",
             "status":"rejected",
             "doc_type":"contract",
-            "start_date":"04.07.2021",
-            "end_date":"04.07.2022"
+            "start_date":"04.07.2023",
+            "end_date":"04.07.2035"
         },
         {
             "id":3,
             "name":"Договор №003",
             "status":"approved",
             "doc_type":"reference",
-            "start_date":"04.07.2021",
-            "end_date":"04.07.2022"
+            "start_date":"04.07.2023",
+            "end_date":"04.07.2024"
         },
         {
             "id":4,
             "name":"Договор №003",
             "status":"rejected",
             "doc_type":"reference",
-            "start_date":"04.07.2021",
-            "end_date":"04.07.2022"
+            "start_date":"04.07.2023",
+            "end_date":"04.07.2025"
         }
     ]
 }

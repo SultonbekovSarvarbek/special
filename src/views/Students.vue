@@ -2,36 +2,15 @@
     <div class="students">
         <student-card :student-details="studentInfo" />
         <contract class="contract" :contracts="contracts" />
-
-        <!--<form @submit.prevent="submitForm">
-            <div>
-                <label for="doc_type">Название документа *</label>
-                <input
-                    type="text"
-                    id="doc_type"
-                    v-model="contractForm.docType"
-                />
-            </div>
-            <div>
-                <label for="doc_name">Название документа *</label>
-                <input
-                    type="text"
-                    id="doc_name"
-                    v-model="contractForm.docName"
-                />
-            </div>
-            <div>
-                <button type="submit">Добавить документ</button>
-            </div>
-        </form>-->
     </div>
 </template>
 
 <script>
     import { reactive, ref } from "vue";
-    import StudentCard from "../components/student/StudentCard.vue";
-    import Contract from "../components/student/contract/Contract.vue";
-    import { fetchContracts, newContract } from "../api/contracts";
+    import StudentCard from "@/components/student/StudentCard.vue";
+    import Contract from "@/components/student/contract/Contract.vue";
+    import { fetchContracts, newContract } from "@/api/contracts";
+
     export default {
         name: "Students",
         components: { StudentCard, Contract },
@@ -46,11 +25,14 @@
                 address: "г. Краснодар, ул. Советская 24, кв. 208 ",
             });
 
-            const contractForm = reactive({
-                docType: "",
-                docName: "",
-            });
+            //const contractForm = reactive({
+            //    docType: "",
+            //    docName: "",
+            //});
             const contracts = ref([]);
+            (async () => {
+                contracts.value = await fetchContracts();
+            })();
 
             async function submitForm() {
                 const { docName, docType } = contractForm;
@@ -62,11 +44,7 @@
                 await newContract(requiredData);
             }
 
-            (async () => {
-                contracts.value = await fetchContracts();
-            })();
-
-            return { studentInfo, contracts, contractForm, submitForm };
+            return { studentInfo, contracts };
         },
     };
 </script>

@@ -1,15 +1,16 @@
 <template>
     <button
-        class="base-button"
         @click="handleClick"
         :disabled="buttonDisabled"
         :type="nativeType"
-        :class="[type ? 'base-button--' + type : '']"
+        :class="['base-button', 'base-button--' + type, buttonUppercase]"
     >
         <span v-if="$slots.default"><slot></slot></span>
     </button>
 </template>
 <script>
+    import { computed } from "vue";
+
     export default {
         name: "Button",
         emits: ["click"],
@@ -26,12 +27,19 @@
                 type: Boolean,
                 default: false,
             },
+            uppercase: {
+                type: Boolean,
+                default: false,
+            },
         },
         setup(props, ctx) {
             const handleClick = (event) => {
                 ctx.emit("click", event);
             };
-            return { handleClick };
+            const buttonUppercase = computed(() => {
+                return props.uppercase ? "base-button--uppercase" : "";
+            });
+            return { handleClick, buttonUppercase };
         },
     };
 </script>
@@ -43,9 +51,11 @@
         text-align: center;
         font-size: 16px;
         line-height: 19.2px;
-        text-transform: uppercase;
         font-weight: 800;
         background-color: $primary;
+        &--uppercase {
+            text-transform: uppercase;
+        }
         &--warning {
             background-color: $warning;
         }
@@ -54,6 +64,9 @@
         }
         &--success {
             background-color: $success;
+        }
+        &--secondary {
+            background-color: $secondary-100;
         }
     }
 </style>

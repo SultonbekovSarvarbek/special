@@ -2,31 +2,32 @@
     <VueFinalModal
         class="modal-container"
         content-class="modal-content"
-        :lock-scroll="true"
-        lock-scroll
         overlay-transition="vfm-fade"
+        @beforeOpen="beforeOpen"
+        @closed="onClose"
+        @clickOutside="onClose"
+        :esc-to-close="false"
         content-transition="vfm-fade"
         @update:model-value="(val) => emit('update:modelValue', val)"
     >
         <div class="modal">
-            <div>
-                <slot />
-                <div class="modal__bottom">
-                    <base-button type="warning" uppercase
-                        >Добавить документ</base-button
-                    >
-                    <base-button
-                        type="secondary"
-                        uppercase
-                        @click="emit('update:modelValue', val)"
-                        >Отмена</base-button
-                    >
-                </div>
+            <slot />
+            <div class="modal__bottom">
+                <base-button type="warning" uppercase
+                    >Добавить документ</base-button
+                >
+                <base-button
+                    type="secondary"
+                    uppercase
+                    @click="emit('update:modelValue', val)"
+                    >Отмена</base-button
+                >
             </div>
+
             <div>
                 <button
                     class="modal-close"
-                    @click="emit('update:modelValue', val)"
+                    @click="emit('update:modelValue', false)"
                 >
                     <base-icon name="ic_cross" />
                 </button>
@@ -34,29 +35,19 @@
         </div>
     </VueFinalModal>
 </template>
-<script setup>
-    import { ref } from "vue";
-    import { VueFinalModal } from "vue-final-modal";
-    //const props = defineProps({
-    //    title: String,
-    //    content: String,
-    //});
 
+<script setup>
+    import { lock, unlock } from "tua-body-scroll-lock";
+    import { VueFinalModal } from "vue-final-modal";
+    const targetElement = document.querySelector("body");
+
+    const beforeOpen = () => {
+        lock(targetElement);
+    };
+    const onClose = () => {
+        unlock(targetElement);
+    };
     const emit = defineEmits(["update:modelValue"]);
-    const getInitialValues = () => ({
-        teleportTo: "body",
-        modelValue: false,
-        displayDirective: "if",
-        hideOverlay: false,
-        overlayTransition: "vfm-fade",
-        contentTransition: "vfm-fade",
-        clickToClose: true,
-        escToClose: true,
-        background: "non-interactive",
-        lockScroll: true,
-        swipeToClose: "none",
-    });
-    const options = ref(getInitialValues());
 </script>
 
 <style lang="scss">
@@ -71,8 +62,10 @@
         top: 0;
         width: 100%;
         z-index: 20;
+        background: inherit;
         .vfm--overlay {
-            background: rgb(0 0 0 / 76%) !important;
+            background: rgba(13, 40, 57, 0.5);
+            position: fixed;
         }
     }
     .modal-content {
@@ -89,18 +82,9 @@
         position: absolute;
         top: 0;
         right: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 32px;
-        height: 32px;
-        margin: 8px 8px 0 0;
+        right: 30px;
+        top: 30px;
         cursor: pointer;
-    }
-    .modal-close {
-        &:hover {
-            color: gray;
-        }
     }
     .modal {
         padding: 30px;

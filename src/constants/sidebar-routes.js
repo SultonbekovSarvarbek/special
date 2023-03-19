@@ -25,7 +25,7 @@ const routes = [
         icon: "ic_lesson",
     },
     {
-        name: "Группу",
+        name: "Группы",
         path: "/groups",
         icon: "ic_employees",
     },

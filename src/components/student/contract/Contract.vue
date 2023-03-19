@@ -18,7 +18,7 @@
                     <vc-select v-model="docDate" :options="['Дате']" />
                 </div>
             </div>
-            <base-button type="warning" uppercase @click="modalInstance.open()"
+            <base-button type="warning" uppercase @click="addContract"
                 >добавить документ</base-button
             >
         </div>
@@ -40,7 +40,6 @@
     import { vfm } from "@/plugins/vue-final-modal";
     import VModal from "@/components/modals/VModal.vue";
     import NewContract from "@/components/modals/NewContract.vue";
-
     export default {
         name: "Contract",
         components: { VcSelect, ContractList },
@@ -90,19 +89,18 @@
             });
 
             function addContract() {
-                console.log(open);
                 modalInstance.open();
-                //open();
             }
 
             const allContracts = computed(() => {
-                const filters = {};
+                const filters = { start_date: "04.07.2023" };
                 docType.value && docType.value !== null
                     ? (filters.doc_type = docType.value.value)
                     : {};
                 docStatus.value && docStatus.value !== null
                     ? (filters.status = docStatus.value.value)
                     : {};
+
                 return multiFilter(props.contracts, filters);
             });
 

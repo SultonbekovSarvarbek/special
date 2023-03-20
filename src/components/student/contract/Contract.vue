@@ -14,11 +14,13 @@
                     />
                 </div>
                 <div class="search-bar__item">
-                    <label class="search-bar__label">Сортировать по</label>
-                    <vc-select v-model="docDate" :options="['Дате']" />
+                    <label class="search-bar__label"
+                        >Сортировать по (Дата заключения договора)</label
+                    >
+                    <vc-select v-model="docDate" :options="docDateOptions" />
                 </div>
             </div>
-            <base-button type="warning" uppercase @click="addContract"
+            <base-button type="warning" uppercase @click="modalInstance.open()"
                 >добавить документ</base-button
             >
         </div>
@@ -31,91 +33,55 @@
     </div>
 </template>
 
-<script>
+<script setup>
     import { ref, reactive, computed } from "vue";
-    import VcSelect from "@/components/ui/VcSelect.vue";
-    import ContractList from "./ContractList.vue";
     import { multiFilter } from "@/utils/index";
     import { useModal } from "vue-final-modal";
     import { vfm } from "@/plugins/vue-final-modal";
+    // COMPONENTS
+    import VcSelect from "@/components/ui/VcSelect.vue";
+    import ContractList from "./ContractList.vue";
     import VModal from "@/components/modals/VModal.vue";
     import NewContract from "@/components/modals/NewContract.vue";
-    export default {
-        name: "Contract",
-        components: { VcSelect, ContractList },
-        props: {
-            contracts: {
-                type: Array,
-            },
+    // CONSTANTS
+    import types from "@/constants/contract/types";
+    import statuses from "@/constants/contract/statuses";
+
+    const props = defineProps({
+        contracts: {
+            type: Array,
         },
-        setup(props, ctx) {
-            const docType = ref(null);
-            const docStatus = ref(null);
-            const docDate = ref(null);
-            const docTypeOptions = reactive([
-                {
-                    value: "contract",
-                    name: "Договор",
-                },
-                {
-                    value: "reference",
-                    name: "Справка",
-                },
-                {
-                    value: "another",
-                    name: "Другое",
-                },
-            ]);
-            const docStatusOptions = reactive([
-                {
-                    value: "approved",
-                    name: "Заключен",
-                },
-                {
-                    value: "rejected",
-                    name: "Расторгнут",
-                },
-            ]);
+    });
+    const docType = ref(null);
+    const docStatus = ref(null);
+    const docDate = ref(null);
+    const docTypeOptions = reactive(types);
+    const docStatusOptions = reactive(statuses);
+    const docDateOptions = reactive([
+        "03.07.2023",
+        "04.07.2023",
+        "05.07.2023",
+        "06.07.2023",
+    ]);
 
-            const modalInstance = useModal({
-                context: vfm,
-                component: VModal,
-                onClosed() {
-                    modalInstance.destroy();
-                },
-                slots: {
-                    default: NewContract,
-                },
-            });
-
-            function addContract() {
-                modalInstance.open();
-            }
-
-            const allContracts = computed(() => {
-                const filters = { start_date: "04.07.2023" };
-                docType.value && docType.value !== null
-                    ? (filters.doc_type = docType.value.value)
-                    : {};
-                docStatus.value && docStatus.value !== null
-                    ? (filters.status = docStatus.value.value)
-                    : {};
-
-                return multiFilter(props.contracts, filters);
-            });
-
-            return {
-                docType,
-                docStatus,
-                docDate,
-                addContract,
-                docTypeOptions,
-                docStatusOptions,
-                modalInstance,
-                allContracts,
-            };
+    const modalInstance = useModal({
+        context: vfm,
+        component: VModal,
+        onClosed() {
+            modalInstance.destroy();
         },
-    };
+        slots: {
+            default: NewContract,
+        },
+    });
+
+    const allContracts = computed(() => {
+        const filters = {};
+        filters.doc_type = docType.value?.value || "";
+        filters.status = docStatus.value?.value || "";
+        filters.start_date = docDate.value || "";
+        return multiFilter(props.contracts, filters);
+    });
 </script>
 
 <style lang="scss">

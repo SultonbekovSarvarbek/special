@@ -63,20 +63,13 @@
     </div>
 </template>
 
-<script>
-    import { toRefs } from "vue";
-    export default {
-        name: "StudentCard",
-        components: {},
-        props: {
-            studentDetails: Object,
+<script setup>
+    const props = defineProps({
+        studentDetails: {
+            type: Object,
             defult: () => {},
         },
-        setup(props) {
-            const { studentDetails } = toRefs(props);
-            return { studentDetails };
-        },
-    };
+    });
 </script>
 
 <style lang="scss">

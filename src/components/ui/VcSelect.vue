@@ -2,7 +2,6 @@
     <v-select
         :options="options"
         :modelValue="selected"
-        label="name"
         :searchable="false"
         :placeholder="placeholder"
         @update:modelValue="updateModelValue"
@@ -16,37 +15,27 @@
     </v-select>
 </template>
 
-<script>
+<script setup>
     import { ref } from "vue";
     import VSelect from "vue-select";
-    export default {
-        name: "VcSelect",
-        props: {
-            placeholder: {
-                type: String,
-                default: () => "Не выбрано",
-            },
-            options: {
-                type: Array,
-                required: true,
-            },
+    const props = defineProps({
+        placeholder: {
+            type: String,
+            default: () => "Не выбрано",
         },
-        components: {
-            VSelect,
+        options: {
+            type: Array,
+            required: true,
         },
-        setup(props, ctx) {
-            let selected = ref[""];
-            function updateModelValue(val) {
-                ctx.emit("update:modelValue", val);
-            }
-            return { selected, updateModelValue };
-        },
+    });
+    const emit = defineEmits(["update:modelValue"]);
+    let selected = ref[""];
+
+    const updateModelValue = (value) => {
+        emit("update:modelValue", value);
     };
 </script>
 
-<style>
-    @import "vue-select/dist/vue-select.css";
-</style>
 <style lang="scss">
     .base-select {
         color: $primary;

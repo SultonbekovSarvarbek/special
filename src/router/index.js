@@ -1,42 +1,35 @@
 import { createRouter, createWebHistory } from "vue-router";
-// views
-import Home from "../views/Home.vue";
-import Schedule from "../views/Schedule.vue";
-import Students from "../views/Students.vue";
-import Teachers from "../views/Teachers.vue";
-import Lessons from "../views/Lessons.vue";
-import Groups from "../views/Groups.vue";
-// routes
+
 const routes = [
     {
         path: "/",
         name: "Главная",
-        component: Home,
+        component: () => import("@/views/Home.vue"),
     },
     {
         path: "/schedule",
         name: "Расписания",
-        component: Schedule,
+        component: () => import("@/views/Schedule.vue"),
     },
     {
         path: "/students",
         name: "Ученики",
-        component: Students,
+        component: () => import("@/views/Students.vue"),
     },
     {
         path: "/teachers",
         name: "Преподаватели",
-        component: Teachers,
+        component: () => import("@/views/Teachers.vue"),
     },
     {
         path: "/lessons",
         name: "Занятия",
-        component: Lessons,
+        component: () => import("@/views/Lessons.vue"),
     },
     {
         path: "/groups",
         name: "Группы",
-        component: Groups,
+        component: () => import("@/views/Groups.vue"),
     },
 ];
 const route = createRouter({

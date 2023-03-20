@@ -1,8 +1,9 @@
 <template>
     <div class="app-header">
         <div class="app-header__content">
-            <div>
-                <span class="url">{{ $route.name }}/ Ученики</span> / Документы
+            <div class="app-header__breadcrumbs">
+                <span class="parent-url">Главная / Ученики</span>
+                <span class="current-url"> / Документы</span>
             </div>
             <div class="app-header-user">
                 <div class="user-info">
@@ -37,14 +38,15 @@
             justify-content: space-between;
             align-items: center;
             font-family: "Alegreya Sans", sans-serif;
-            span {
-                //text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                font-weight: 200;
-                color: $secondary;
-            }
-            .url {
+            .parent-url {
                 color: $dark;
             }
+        }
+        &__breadcrumbs {
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            font-weight: 200;
+            color: $secondary;
+            font-size: 14px;
         }
         &-user {
             display: flex;

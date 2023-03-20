@@ -76,7 +76,8 @@
         margin: 48px 0 80px;
         position: relative;
         z-index: 25;
-        width: 50%;
+        width: 100%;
+        max-width: 650px;
     }
     .modal-close {
         position: absolute;

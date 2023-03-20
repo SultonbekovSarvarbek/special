@@ -24,16 +24,10 @@
     </aside>
 </template>
 
-<script>
+<script setup>
     import { reactive } from "vue";
     import SidebarRoutes from "../../../constants/sidebar-routes";
-    export default {
-        name: "AppSidebar",
-        setup() {
-            const routes = reactive(SidebarRoutes);
-            return { routes };
-        },
-    };
+    const routes = reactive(SidebarRoutes);
 </script>
 
 <style lang="scss">

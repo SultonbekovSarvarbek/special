@@ -27,24 +27,13 @@
     </div>
 </template>
 
-<script>
-    import { toRefs } from "vue";
+<script setup>
     import VcStatus from "@/components/ui/VcStatus.vue";
-    export default {
-        name: "ContractItem",
-        components: {
-            VcStatus,
+    const props = defineProps({
+        contract: {
+            type: Object,
         },
-        props: {
-            contract: {
-                type: Object,
-            },
-        },
-        setup(props) {
-            const { contract } = toRefs(props);
-            return { contract };
-        },
-    };
+    });
 </script>
 
 <style lang="scss">

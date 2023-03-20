@@ -39,6 +39,9 @@ button {
 picture {
     display: block;
 }
+.required-sign {
+    color: $error;
+}
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.3s ease;

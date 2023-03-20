@@ -9,29 +9,22 @@
         </span>
     </div>
 </template>
-<script>
+<script setup>
     import { computed } from "vue";
-    export default {
-        name: "VcStatus",
-        props: {
-            type: {
-                type: String,
-                default: "approved",
-            },
+    const props = defineProps({
+        type: {
+            type: String,
+            default: "approved",
         },
-        setup(props) {
-            const statusName = computed(() => {
-                if (props.type === "approved") {
-                    return "Заключен";
-                }
-                if (props.type === "rejected") {
-                    return "Расторгнут";
-                }
-            });
-
-            return { statusName };
-        },
-    };
+    });
+    const statusName = computed(() => {
+        if (props.type === "approved") {
+            return "Заключен";
+        }
+        if (props.type === "rejected") {
+            return "Расторгнут";
+        }
+    });
 </script>
 <style lang="scss">
     .v-status {

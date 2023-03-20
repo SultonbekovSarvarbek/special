@@ -8,40 +8,33 @@
         <span v-if="$slots.default"><slot></slot></span>
     </button>
 </template>
-<script>
+<script setup>
     import { computed } from "vue";
-
-    export default {
-        name: "Button",
-        emits: ["click"],
-        props: {
-            type: {
-                type: String,
-                default: "default",
-            },
-            nativeType: {
-                type: String,
-                default: "button",
-            },
-            buttonDisabled: {
-                type: Boolean,
-                default: false,
-            },
-            uppercase: {
-                type: Boolean,
-                default: false,
-            },
+    const props = defineProps({
+        type: {
+            type: String,
+            default: "default",
         },
-        setup(props, ctx) {
-            const handleClick = (event) => {
-                ctx.emit("click", event);
-            };
-            const buttonUppercase = computed(() => {
-                return props.uppercase ? "base-button--uppercase" : "";
-            });
-            return { handleClick, buttonUppercase };
+        nativeType: {
+            type: String,
+            default: "button",
         },
+        buttonDisabled: {
+            type: Boolean,
+            default: false,
+        },
+        uppercase: {
+            type: Boolean,
+            default: false,
+        },
+    });
+    const emit = defineEmits(["click"]);
+    const handleClick = (event) => {
+        emit("click", event);
     };
+    const buttonUppercase = computed(() => {
+        return props.uppercase ? "base-button--uppercase" : "";
+    });
 </script>
 <style lang="scss">
     .base-button {
